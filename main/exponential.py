@@ -8,3 +8,9 @@ def calculate_e(n):
         result_label.config(text=f"(1 + 1/{n})^{n} = {result:.10f}")
     except ZeroDivisionError:
         result_label.config(text="Cannot divide by zero!")
+
+root = tk.Tk()
+root.title("e Approximation Visualizer")   
+
+slider = tk.Scale(root, from_=1, to=10000, orient=tk.HORIZONTAL, label="Choose n", command=calculate_e)
+slider.pack(pady=20)
