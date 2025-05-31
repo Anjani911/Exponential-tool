@@ -17,3 +17,5 @@ slider.pack(pady=20)
 
 result_label = tk.Label(root, text="Move the slider to calculate", font=("Arial", 14))
 result_label.pack(pady=10)
+
+root.mainloop()
