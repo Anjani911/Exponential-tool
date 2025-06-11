@@ -1,11 +1,18 @@
 import tkinter as tk
-from math import pow
+from tkinter import ttk
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import numpy as np
 
 def calculate_e(n):
     try:
-        n = int(n)
+        n = int(float(n))
         result = pow((1 + 1/n), n)
         result_label.config(text=f"(1 + 1/{n})^{n} = {result:.10f}")
+
+        
+        update_plot(n)
+
     except ZeroDivisionError:
         result_label.config(text="Cannot divide by zero!")
 
@@ -23,19 +30,30 @@ def update_plot(current_n):
     ax.grid(True)
     canvas.draw()
 
+
 root = tk.Tk()
 root.title("e Approximation Visualizer")
 root.geometry("800x600")
-root.configure(bg="#f7f7f7")   
+root.configure(bg="#f7f7f7")
 
 
 style = ttk.Style()
 style.configure("TLabel", font=("Helvetica", 14), background="#f7f7f7")
 
-slider = tk.Scale(root, from_=1, to=10000, orient=tk.HORIZONTAL, label="Choose n", command=calculate_e)
-slider.pack(pady=20)
 
-result_label = tk.Label(root, text="Move the slider to calculate", font=("Arial", 14))
+ttk.Label(root, text="Choose n (1 to 10,000):").pack(pady=10)
+slider = ttk.Scale(root, from_=1, to=10000, orient=tk.HORIZONTAL, command=calculate_e)
+slider.pack(fill="x", padx=20)
+
+
+result_label = ttk.Label(root, text="", font=("Courier", 14))
 result_label.pack(pady=10)
+
+
+fig, ax = plt.subplots(figsize=(6, 4), dpi=100)
+canvas = FigureCanvasTkAgg(fig, master=root)
+canvas_widget = canvas.get_tk_widget()
+canvas_widget.pack(pady=10)
+
 
 root.mainloop()
