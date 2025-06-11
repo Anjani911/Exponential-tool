@@ -9,8 +9,28 @@ def calculate_e(n):
     except ZeroDivisionError:
         result_label.config(text="Cannot divide by zero!")
 
+def update_plot(current_n):
+    n_vals = np.linspace(1, current_n, 200)
+    y_vals = [(1 + 1/n)**n for n in n_vals]
+
+    ax.clear()
+    ax.plot(n_vals, y_vals, label="(1 + 1/n)^n", color="blue")
+    ax.axhline(y=np.e, color="red", linestyle="--", label="e ≈ 2.71828")
+    ax.set_title("Convergence of (1 + 1/n)^n → e")
+    ax.set_xlabel("n")
+    ax.set_ylabel("Value")
+    ax.legend()
+    ax.grid(True)
+    canvas.draw()
+
 root = tk.Tk()
-root.title("e Approximation Visualizer")   
+root.title("e Approximation Visualizer")
+root.geometry("800x600")
+root.configure(bg="#f7f7f7")   
+
+
+style = ttk.Style()
+style.configure("TLabel", font=("Helvetica", 14), background="#f7f7f7")
 
 slider = tk.Scale(root, from_=1, to=10000, orient=tk.HORIZONTAL, label="Choose n", command=calculate_e)
 slider.pack(pady=20)
